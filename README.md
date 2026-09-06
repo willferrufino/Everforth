@@ -4,7 +4,7 @@ A collection of federal-style web content and accessibility samples created to d
 
 > **Portfolio Note:** These are independent portfolio concepts created for demonstration purposes. They are not official Department of Homeland Security (DHS) websites, documents, or publications.
 
-**[View Portfolio Samples →](index.html)**
+**[View Portfolio Samples →](https://willferrufino.github.io/Everforth/)**
 
 ### 01 — Digital Services Overview
 
@@ -18,7 +18,7 @@ A public-facing DHS OCIO-style content page focused on making technical informat
 - Responsive design
 - Content ownership and review information
 
-**[View Digital Services Overview →](ocio-digital-services.html)**
+**[View Digital Services Overview →](https://willferrufino.github.io/Everforth/ocio-digital-services.html)**
 
 ---
 
@@ -35,7 +35,7 @@ An interactive accessibility and remediation example demonstrating how web acces
 - JavaScript filtering and progress tracking
 - Regression and validation workflow
 
-**[View Section 508 Accessibility Review →](section-508-remediation-report.html)**
+**[View Section 508 Accessibility Review →](https://willferrufino.github.io/Everforth/section-508-remediation-report.html)**
 
 ---
 
@@ -53,7 +53,7 @@ A sample federal content-management workflow showing how content can move from r
 - QA and production validation
 - Developer issue handoff example
 
-**[View Content Governance Workflow →](content-governance-workflow.html)**
+**[View Content Governance Workflow →](https://willferrufino.github.io/Everforth/content-governance-workflow.html)**
 
 ---
 
@@ -72,7 +72,7 @@ A formal federal-style PDF deliverable demonstrating accessibility reporting, re
 - Regression testing
 - Final remediation disposition
 
-**[View Accessibility Assessment PDF →](DHS-Style-Web-Accessibility-Assessment-Report.pdf)**
+**[View Accessibility Assessment PDF →](https://willferrufino.github.io/Everforth/DHS-Style-Web-Accessibility-Assessment-Report.pdf)**
 
 ---
 
