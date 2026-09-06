@@ -1,327 +1,904 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Sample federal content governance workflow, content inventory, and publishing QA artifact for a DHS OCIO portfolio.">
-<title>Content governance and publishing workflow | DHS OCIO Portfolio Concept</title>
-<style>
-:root{
-  --ink:#1b1b1b;
-  --muted:#565c65;
-  --blue:#005ea8;
-  --blue-dark:#1a4480;
-  --blue-darker:#162e51;
-  --cyan:#00bde3;
-  --red:#b50909;
-  --green:#2e8540;
-  --gold:#ffbe2e;
-  --bg:#f7f9fa;
-  --line:#dfe1e2;
-  --white:#fff;
-  --focus:#face00;
-  --radius:10px;
-  --shadow:0 10px 28px rgba(22,46,81,.08);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  color:var(--ink);
-  background:var(--white);
-  line-height:1.55;
-}
-a{color:var(--blue);text-decoration-thickness:.08em;text-underline-offset:.18em}
-a:hover{color:var(--blue-dark)}
-a:focus,button:focus,input:focus,select:focus,summary:focus{
-  outline:4px solid var(--focus);
-  outline-offset:3px;
-}
-.skip-link{
-  position:absolute;left:-999px;top:8px;background:#fff;color:#000;
-  padding:.75rem 1rem;z-index:9999;border:2px solid #000;
-}
-.skip-link:focus{left:8px}
-.gov-banner{
-  background:#eee;color:#1b1b1b;font-size:.86rem;border-bottom:1px solid var(--line);
-}
-.gov-banner .wrap{padding:.48rem 1rem;display:flex;gap:.6rem;align-items:center}
-.flag{
-  width:18px;height:12px;display:inline-grid;grid-template-rows:repeat(7,1fr);
-  border:1px solid #bbb;flex:0 0 auto;background:
-  linear-gradient(#b22234 0 14%,#fff 14% 28%,#b22234 28% 42%,#fff 42% 56%,#b22234 56% 70%,#fff 70% 84%,#b22234 84% 100%);
-}
-.portfolio-note{
-  background:#fff4e6;border-left:5px solid #ff9d1a;padding:.8rem 1rem;font-size:.9rem;
-}
-.site-header{background:var(--blue-darker);color:#fff}
-.brand-row{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:1.05rem 1rem}
-.brand{display:flex;align-items:center;gap:.9rem}
-.mark{
-  width:52px;height:52px;border-radius:50%;border:3px solid #fff;display:grid;place-items:center;
-  font-weight:800;font-size:.72rem;line-height:1;text-align:center;letter-spacing:.04em;
-}
-.brand strong{display:block;font-size:1.1rem}
-.brand span{display:block;font-size:.88rem;color:#d9e8f6}
-.nav{background:#fff;border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;gap:.2rem;align-items:center;overflow-x:auto}
-.nav a{
-  display:block;padding:.86rem .9rem;color:var(--blue-darker);font-weight:700;text-decoration:none;white-space:nowrap
-}
-.nav a[aria-current="page"]{border-bottom:4px solid var(--blue);color:var(--blue)}
-.wrap{max-width:1180px;margin:auto}
-.hero{background:linear-gradient(135deg,#f0f7fc 0%,#fff 70%);border-bottom:1px solid var(--line)}
-.hero .wrap{padding:3.4rem 1rem 3rem}
-.eyebrow{text-transform:uppercase;letter-spacing:.08em;font-weight:800;font-size:.8rem;color:var(--blue)}
-h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.05;margin:.35rem 0 1rem;color:var(--blue-darker);max-width:900px}
-.lede{font-size:1.22rem;max-width:780px;color:#30363d;margin:0}
-main .wrap{padding:2.6rem 1rem}
-h2{font-size:1.8rem;line-height:1.2;color:var(--blue-darker);margin:2.2rem 0 .8rem}
-h3{font-size:1.18rem;color:var(--blue-darker);margin:1.4rem 0 .45rem}
-p{max-width:800px}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1.15rem}
-.card{
-  grid-column:span 4;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);padding:1.25rem
-}
-.card h3{margin-top:0}
-.card p:last-child{margin-bottom:0}
-.callout{
-  background:#eef7ff;border-left:5px solid var(--blue);padding:1.1rem 1.2rem;margin:1.5rem 0;
-  max-width:900px
-}
-.button{
-  display:inline-block;border:0;border-radius:4px;background:var(--blue);color:#fff!important;
-  padding:.72rem 1rem;font-weight:800;text-decoration:none;cursor:pointer;font-size:1rem
-}
-.button:hover{background:var(--blue-dark)}
-.button.secondary{background:#fff;color:var(--blue)!important;border:2px solid var(--blue)}
-.button.small{font-size:.9rem;padding:.52rem .72rem}
-.tag{
-  display:inline-block;border-radius:999px;background:#e7f3ff;color:#17446f;font-size:.78rem;
-  font-weight:800;padding:.24rem .55rem;margin:.1rem .18rem .1rem 0
-}
-.status-pass{background:#e8f5e9;color:#1f5c2e}
-.status-open{background:#fff3cd;color:#684f00}
-.status-fixed{background:#e7f3ff;color:#17446f}
-.status-high{background:#fde8e8;color:#7a0000}
-.status-med{background:#fff3cd;color:#684f00}
-.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;margin:1rem 0}
-table{border-collapse:collapse;width:100%;min-width:760px}
-caption{text-align:left;font-weight:800;font-size:1.05rem;padding:.9rem;background:#f5f7f9}
-th,td{padding:.75rem .8rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
-th{background:#e9eef3;color:#162e51}
-tbody tr:last-child td{border-bottom:0}
-.filters{display:flex;gap:.75rem;align-items:end;flex-wrap:wrap;background:#f5f7f9;padding:1rem;border-radius:8px}
-.field{display:flex;flex-direction:column;gap:.3rem}
-label{font-weight:800}
-select,input[type="text"]{font:inherit;border:1px solid #71767a;border-radius:4px;padding:.6rem;background:#fff}
-.checklist{
-  list-style:none;padding:0;max-width:900px;border:1px solid var(--line);border-radius:8px;overflow:hidden
-}
-.checklist li{display:flex;gap:.7rem;align-items:flex-start;padding:.8rem;border-bottom:1px solid var(--line)}
-.checklist li:last-child{border-bottom:0}
-.checklist input{margin-top:.3rem;transform:scale(1.2)}
-.progress{width:100%;height:12px;background:#dfe1e2;border-radius:999px;overflow:hidden;max-width:600px}
-.progress>span{display:block;height:100%;background:var(--green);width:0;transition:width .2s}
-.details details{border:1px solid var(--line);border-radius:8px;margin:.7rem 0;background:#fff}
-.details summary{cursor:pointer;font-weight:800;padding:.9rem}
-.details .body{padding:0 .9rem .9rem}
-code{background:#f0f0f0;padding:.12rem .28rem;border-radius:3px}
-pre{background:#1b1b1b;color:#f8f8f2;padding:1rem;border-radius:8px;overflow:auto;font-size:.9rem}
-.workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem;counter-reset:step}
-.workflow .step{border-top:5px solid var(--blue);background:#f5f9fc;padding:1rem;min-height:170px}
-.workflow .step::before{counter-increment:step;content:counter(step);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--blue-darker);color:#fff;font-weight:800;margin-bottom:.7rem}
-.meta{display:flex;flex-wrap:wrap;gap:.75rem;font-size:.9rem;color:var(--muted);margin-top:1rem}
-footer{margin-top:3rem;background:#f1f3f5;border-top:1px solid var(--line)}
-footer .wrap{padding:2rem 1rem}
-.portfolio-proof{background:#162e51;color:#fff;padding:2rem 0;margin-top:3rem}
-.portfolio-proof h2,.portfolio-proof h3{color:#fff}
-.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.proof-card{border:1px solid rgba(255,255,255,.3);padding:1rem;border-radius:8px;background:rgba(255,255,255,.04)}
-.muted{color:var(--muted)}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-@media(max-width:800px){
-  .card{grid-column:span 12}
-  .workflow{grid-template-columns:1fr}
-  .proof-grid{grid-template-columns:1fr}
-  .brand-row{align-items:flex-start}
-}
-@media(prefers-reduced-motion:reduce){
-  *{scroll-behavior:auto!important;transition:none!important}
-}
-</style>
-</head>
-<body>
-
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<div class="gov-banner">
-  <div class="wrap"><span class="flag" aria-hidden="true"></span><span>An official-style U.S. government portfolio concept</span></div>
-</div>
-<div class="portfolio-note">
-  <div class="wrap"><strong>Portfolio sample:</strong> This is an independent demonstration created for a job application. It is not an official Department of Homeland Security website or publication.</div>
-</div>
-<header class="site-header">
-  <div class="wrap brand-row">
-    <div class="brand">
-      <div class="mark" aria-hidden="true">DHS<br>STYLE</div>
-      <div><strong>Department of Homeland Security</strong><span>Office of the Chief Information Officer — portfolio concept</span></div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Sample federal content governance workflow, content inventory, and publishing QA artifact for a DHS OCIO portfolio."
+    />
+    <title>
+      Content governance and publishing workflow | DHS OCIO Portfolio Concept
+    </title>
+    <style>
+      :root {
+        --ink: #1b1b1b;
+        --muted: #565c65;
+        --blue: #005ea8;
+        --blue-dark: #1a4480;
+        --blue-darker: #162e51;
+        --cyan: #00bde3;
+        --red: #b50909;
+        --green: #2e8540;
+        --gold: #ffbe2e;
+        --bg: #f7f9fa;
+        --line: #dfe1e2;
+        --white: #fff;
+        --focus: #face00;
+        --radius: 10px;
+        --shadow: 0 10px 28px rgba(22, 46, 81, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--ink);
+        background: var(--white);
+        line-height: 1.55;
+      }
+      a {
+        color: var(--blue);
+        text-decoration-thickness: 0.08em;
+        text-underline-offset: 0.18em;
+      }
+      a:hover {
+        color: var(--blue-dark);
+      }
+      a:focus,
+      button:focus,
+      input:focus,
+      select:focus,
+      summary:focus {
+        outline: 4px solid var(--focus);
+        outline-offset: 3px;
+      }
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        top: 8px;
+        background: #fff;
+        color: #000;
+        padding: 0.75rem 1rem;
+        z-index: 9999;
+        border: 2px solid #000;
+      }
+      .skip-link:focus {
+        left: 8px;
+      }
+      .gov-banner {
+        background: #eee;
+        color: #1b1b1b;
+        font-size: 0.86rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .gov-banner .wrap {
+        padding: 0.48rem 1rem;
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
+      }
+      .flag {
+        width: 18px;
+        height: 12px;
+        display: inline-grid;
+        grid-template-rows: repeat(7, 1fr);
+        border: 1px solid #bbb;
+        flex: 0 0 auto;
+        background: linear-gradient(
+          #b22234 0 14%,
+          #fff 14% 28%,
+          #b22234 28% 42%,
+          #fff 42% 56%,
+          #b22234 56% 70%,
+          #fff 70% 84%,
+          #b22234 84% 100%
+        );
+      }
+      .portfolio-note {
+        background: #fff4e6;
+        border-left: 5px solid #ff9d1a;
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+      }
+      .site-header {
+        background: var(--blue-darker);
+        color: #fff;
+      }
+      .brand-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        padding: 1.05rem 1rem;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+      }
+      .mark {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 0.72rem;
+        line-height: 1;
+        text-align: center;
+        letter-spacing: 0.04em;
+      }
+      .brand strong {
+        display: block;
+        font-size: 1.1rem;
+      }
+      .brand span {
+        display: block;
+        font-size: 0.88rem;
+        color: #d9e8f6;
+      }
+      .nav {
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+      }
+      .nav .wrap {
+        display: flex;
+        gap: 0.2rem;
+        align-items: center;
+        overflow-x: auto;
+      }
+      .nav a {
+        display: block;
+        padding: 0.86rem 0.9rem;
+        color: var(--blue-darker);
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .nav a[aria-current="page"] {
+        border-bottom: 4px solid var(--blue);
+        color: var(--blue);
+      }
+      .wrap {
+        max-width: 1180px;
+        margin: auto;
+      }
+      .hero {
+        background: linear-gradient(135deg, #f0f7fc 0%, #fff 70%);
+        border-bottom: 1px solid var(--line);
+      }
+      .hero .wrap {
+        padding: 3.4rem 1rem 3rem;
+      }
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 800;
+        font-size: 0.8rem;
+        color: var(--blue);
+      }
+      h1 {
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        line-height: 1.05;
+        margin: 0.35rem 0 1rem;
+        color: var(--blue-darker);
+        max-width: 900px;
+      }
+      .lede {
+        font-size: 1.22rem;
+        max-width: 780px;
+        color: #30363d;
+        margin: 0;
+      }
+      main .wrap {
+        padding: 2.6rem 1rem;
+      }
+      h2 {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        color: var(--blue-darker);
+        margin: 2.2rem 0 0.8rem;
+      }
+      h3 {
+        font-size: 1.18rem;
+        color: var(--blue-darker);
+        margin: 1.4rem 0 0.45rem;
+      }
+      p {
+        max-width: 800px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.15rem;
+      }
+      .card {
+        grid-column: span 4;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.25rem;
+      }
+      .card h3 {
+        margin-top: 0;
+      }
+      .card p:last-child {
+        margin-bottom: 0;
+      }
+      .callout {
+        background: #eef7ff;
+        border-left: 5px solid var(--blue);
+        padding: 1.1rem 1.2rem;
+        margin: 1.5rem 0;
+        max-width: 900px;
+      }
+      .button {
+        display: inline-block;
+        border: 0;
+        border-radius: 4px;
+        background: var(--blue);
+        color: #fff !important;
+        padding: 0.72rem 1rem;
+        font-weight: 800;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+      .button:hover {
+        background: var(--blue-dark);
+      }
+      .button.secondary {
+        background: #fff;
+        color: var(--blue) !important;
+        border: 2px solid var(--blue);
+      }
+      .button.small {
+        font-size: 0.9rem;
+        padding: 0.52rem 0.72rem;
+      }
+      .tag {
+        display: inline-block;
+        border-radius: 999px;
+        background: #e7f3ff;
+        color: #17446f;
+        font-size: 0.78rem;
+        font-weight: 800;
+        padding: 0.24rem 0.55rem;
+        margin: 0.1rem 0.18rem 0.1rem 0;
+      }
+      .status-pass {
+        background: #e8f5e9;
+        color: #1f5c2e;
+      }
+      .status-open {
+        background: #fff3cd;
+        color: #684f00;
+      }
+      .status-fixed {
+        background: #e7f3ff;
+        color: #17446f;
+      }
+      .status-high {
+        background: #fde8e8;
+        color: #7a0000;
+      }
+      .status-med {
+        background: #fff3cd;
+        color: #684f00;
+      }
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 760px;
+      }
+      caption {
+        text-align: left;
+        font-weight: 800;
+        font-size: 1.05rem;
+        padding: 0.9rem;
+        background: #f5f7f9;
+      }
+      th,
+      td {
+        padding: 0.75rem 0.8rem;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid var(--line);
+      }
+      th {
+        background: #e9eef3;
+        color: #162e51;
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      .filters {
+        display: flex;
+        gap: 0.75rem;
+        align-items: end;
+        flex-wrap: wrap;
+        background: #f5f7f9;
+        padding: 1rem;
+        border-radius: 8px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      label {
+        font-weight: 800;
+      }
+      select,
+      input[type="text"] {
+        font: inherit;
+        border: 1px solid #71767a;
+        border-radius: 4px;
+        padding: 0.6rem;
+        background: #fff;
+      }
+      .checklist {
+        list-style: none;
+        padding: 0;
+        max-width: 900px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .checklist li {
+        display: flex;
+        gap: 0.7rem;
+        align-items: flex-start;
+        padding: 0.8rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .checklist li:last-child {
+        border-bottom: 0;
+      }
+      .checklist input {
+        margin-top: 0.3rem;
+        transform: scale(1.2);
+      }
+      .progress {
+        width: 100%;
+        height: 12px;
+        background: #dfe1e2;
+        border-radius: 999px;
+        overflow: hidden;
+        max-width: 600px;
+      }
+      .progress > span {
+        display: block;
+        height: 100%;
+        background: var(--green);
+        width: 0;
+        transition: width 0.2s;
+      }
+      .details details {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        margin: 0.7rem 0;
+        background: #fff;
+      }
+      .details summary {
+        cursor: pointer;
+        font-weight: 800;
+        padding: 0.9rem;
+      }
+      .details .body {
+        padding: 0 0.9rem 0.9rem;
+      }
+      code {
+        background: none;
+        padding: 0.12rem 0.28rem;
+        border-radius: 3px;
+      }
+      pre {
+        background: #1b1b1b;
+        color: #f8f8f2;
+        padding: 1rem;
+        border-radius: 8px;
+        overflow: auto;
+        font-size: 0.9rem;
+      }
+      .workflow {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.8rem;
+        counter-reset: step;
+      }
+      .workflow .step {
+        border-top: 5px solid var(--blue);
+        background: #f5f9fc;
+        padding: 1rem;
+        min-height: 170px;
+      }
+      .workflow .step::before {
+        counter-increment: step;
+        content: counter(step);
+        display: grid;
+        place-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--blue-darker);
+        color: #fff;
+        font-weight: 800;
+        margin-bottom: 0.7rem;
+      }
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-top: 1rem;
+      }
+      footer {
+        margin-top: 3rem;
+        background: #f1f3f5;
+        border-top: 1px solid var(--line);
+      }
+      footer .wrap {
+        padding: 2rem 1rem;
+      }
+      .portfolio-proof {
+        background: #162e51;
+        color: #fff;
+        padding: 2rem 0;
+        margin-top: 3rem;
+      }
+      .portfolio-proof h2,
+      .portfolio-proof h3 {
+        color: #fff;
+      }
+      .proof-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .proof-card {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 1rem;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      @media (max-width: 800px) {
+        .card {
+          grid-column: span 12;
+        }
+        .workflow {
+          grid-template-columns: 1fr;
+        }
+        .proof-grid {
+          grid-template-columns: 1fr;
+        }
+        .brand-row {
+          align-items: flex-start;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="gov-banner">
+      <div class="wrap">
+        <span class="flag" aria-hidden="true"></span
+        ><span>An official-style U.S. government portfolio concept</span>
+      </div>
     </div>
-  </div>
-</header>
-
-<nav class="nav" aria-label="Primary">
-  <div class="wrap">
-    <a href="ocio-digital-services.html">Digital services</a>
-    <a href="section-508-remediation-report.html">508 report</a>
-    <a href="content-governance-workflow.html" aria-current="page">Content governance</a>
-  </div>
-</nav>
-
-<section class="hero">
-  <div class="wrap">
-    <div class="eyebrow">Sample governance artifact</div>
-    <h1>Content governance and web publishing workflow</h1>
-    <p class="lede">A practical example of how a federal web team can coordinate requests, validate requirements, review accessibility and quality, publish through a CMS, and keep content current after launch.</p>
-  </div>
-</section>
-
-<main id="main-content">
-  <div class="wrap">
-    <section aria-labelledby="workflow-title">
-      <h2 id="workflow-title">From request to published page</h2>
-      <div class="workflow">
-        <article class="step"><h3>Intake</h3><p>Capture the request, intended audience, user need, content owner, deadline, source material, and required approvals.</p></article>
-        <article class="step"><h3>Review</h3><p>Check accuracy, duplication, plain language, records considerations, links, metadata, and whether the request belongs on the public site.</p></article>
-        <article class="step"><h3>Build</h3><p>Create or update the page in the CMS using approved components, semantic markup, accessible patterns, and responsive layouts.</p></article>
-        <article class="step"><h3>Validate</h3><p>Perform content QA, accessibility checks, cross-browser review, stakeholder verification, and regression testing for related pages.</p></article>
-        <article class="step"><h3>Publish & maintain</h3><p>Publish after approval, confirm production output, record the review date, and schedule the next content review or retirement decision.</p></article>
+    <div class="portfolio-note">
+      <div class="wrap">
+        <strong>Portfolio sample:</strong> This is an independent demonstration
+        created for a job application. It is not an official Department of
+        Homeland Security website or publication.
       </div>
-    </section>
-
-    <section aria-labelledby="roles">
-      <h2 id="roles">Cross-team responsibilities</h2>
-      <div class="grid">
-        <article class="card"><h3>Content owner</h3><p>Confirms factual accuracy, business need, policy alignment, and review cadence.</p></article>
-        <article class="card"><h3>Content manager</h3><p>Shapes content for the web, applies plain language, builds in the CMS, coordinates reviews, documents issues, and validates publication.</p></article>
-        <article class="card"><h3>Design / development</h3><p>Supports component behavior, technical defects, templates, performance, and accessibility fixes that require code changes.</p></article>
-      </div>
-      <div class="callout">
-        <strong>Delivery principle:</strong>
-        <p>Do not treat content, accessibility, and development as separate handoffs. Use shared acceptance criteria so issues are found before launch rather than after publication.</p>
-      </div>
-    </section>
-
-    <section aria-labelledby="inventory-title">
-      <h2 id="inventory-title">Sample content inventory</h2>
-      <p>A content inventory helps a team see what exists, who owns it, whether it is current, and what action is needed.</p>
-      <div class="filters">
-        <div class="field">
-          <label for="inventorySearch">Search inventory</label>
-          <input id="inventorySearch" type="text" placeholder="Try “accessibility” or “services”">
+    </div>
+    <header class="site-header">
+      <div class="wrap brand-row">
+        <div class="brand">
+          <div class="mark" aria-hidden="true">DHS<br />STYLE</div>
+          <div>
+            <strong>Department of Homeland Security</strong
+            ><span
+              >Office of the Chief Information Officer — portfolio concept</span
+            >
+          </div>
         </div>
-        <div class="field">
-          <label for="inventoryState">Action</label>
-          <select id="inventoryState">
-            <option value="">All actions</option>
-            <option value="Keep">Keep</option>
-            <option value="Revise">Revise</option>
-            <option value="Merge">Merge</option>
-            <option value="Retire">Retire</option>
-          </select>
-        </div>
-        <div aria-live="polite"><strong><span id="inventoryCount">6</span> items shown</strong></div>
       </div>
-      <div class="table-wrap">
-        <table id="inventory">
-          <caption>Illustrative federal web content inventory</caption>
-          <thead>
-            <tr><th scope="col">Content item</th><th scope="col">Audience / user need</th><th scope="col">Owner</th><th scope="col">Last reviewed</th><th scope="col">Quality note</th><th scope="col">Action</th></tr>
-          </thead>
-          <tbody>
-            <tr data-state="Keep"><td>Digital services overview</td><td>Public / understand OCIO digital service role</td><td>Digital Services</td><td>Aug. 2026</td><td>Current; concise; accessible</td><td><span class="tag status-pass">Keep</span></td></tr>
-            <tr data-state="Revise"><td>Accessibility resources</td><td>Employees and vendors / find 508 guidance</td><td>Accessibility Program</td><td>Feb. 2025</td><td>Several long paragraphs; needs stronger task-based headings</td><td><span class="tag status-open">Revise</span></td></tr>
-            <tr data-state="Merge"><td>Technology standards FAQ</td><td>Partners / understand common standards</td><td>Enterprise Architecture</td><td>Nov. 2024</td><td>Duplicates two policy explainer pages</td><td><span class="tag">Merge</span></td></tr>
-            <tr data-state="Retire"><td>Legacy modernization announcement</td><td>Public / historical announcement</td><td>Communications</td><td>May 2022</td><td>Outdated and no longer supports an active user task</td><td><span class="tag status-high">Retire</span></td></tr>
-            <tr data-state="Revise"><td>Data services overview</td><td>Public / understand data program</td><td>Data Office</td><td>Jan. 2025</td><td>Acronym-heavy; unclear call to action</td><td><span class="tag status-open">Revise</span></td></tr>
-            <tr data-state="Keep"><td>Contact the technology office</td><td>Public / find the correct contact route</td><td>OCIO Operations</td><td>Jul. 2026</td><td>Current; clear ownership and routing</td><td><span class="tag status-pass">Keep</span></td></tr>
-          </tbody>
-        </table>
+    </header>
+
+    <nav class="nav" aria-label="Primary">
+      <div class="wrap">
+        <a href="ocio-digital-services.html">Digital services</a>
+        <a href="section-508-remediation-report.html">508 report</a>
+        <a href="content-governance-workflow.html" aria-current="page"
+          >Content governance</a
+        >
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow">Sample governance artifact</div>
+        <h1>Content governance and web publishing workflow</h1>
+        <p class="lede">
+          A practical example of how a federal web team can coordinate requests,
+          validate requirements, review accessibility and quality, publish
+          through a CMS, and keep content current after launch.
+        </p>
       </div>
     </section>
 
-    <section aria-labelledby="acceptance">
-      <h2 id="acceptance">Definition of done for a web update</h2>
-      <ul class="checklist">
-        <li><span aria-hidden="true">✓</span><div><strong>Requirement confirmed.</strong> The page has a known audience, user need, owner, and approval path.</div></li>
-        <li><span aria-hidden="true">✓</span><div><strong>Content is web-ready.</strong> The most important information comes first; headings are descriptive; language is concise and understandable.</div></li>
-        <li><span aria-hidden="true">✓</span><div><strong>Accessibility reviewed.</strong> Heading structure, links, images, forms, keyboard use, and content relationships have been checked.</div></li>
-        <li><span aria-hidden="true">✓</span><div><strong>CMS build validated.</strong> Components, metadata, links, responsive behavior, and page relationships work in the staging environment.</div></li>
-        <li><span aria-hidden="true">✓</span><div><strong>Stakeholders approve.</strong> Content owner and required technical or communications partners validate the final version.</div></li>
-        <li><span aria-hidden="true">✓</span><div><strong>Production verified.</strong> The published page is checked after release and assigned a future review date.</div></li>
-      </ul>
-    </section>
+    <main id="main-content">
+      <div class="wrap">
+        <section aria-labelledby="workflow-title">
+          <h2 id="workflow-title">From request to published page</h2>
+          <div class="workflow">
+            <article class="step">
+              <h3>Intake</h3>
+              <p>
+                Capture the request, intended audience, user need, content
+                owner, deadline, source material, and required approvals.
+              </p>
+            </article>
+            <article class="step">
+              <h3>Review</h3>
+              <p>
+                Check accuracy, duplication, plain language, records
+                considerations, links, metadata, and whether the request belongs
+                on the public site.
+              </p>
+            </article>
+            <article class="step">
+              <h3>Build</h3>
+              <p>
+                Create or update the page in the CMS using approved components,
+                semantic markup, accessible patterns, and responsive layouts.
+              </p>
+            </article>
+            <article class="step">
+              <h3>Validate</h3>
+              <p>
+                Perform content QA, accessibility checks, cross-browser review,
+                stakeholder verification, and regression testing for related
+                pages.
+              </p>
+            </article>
+            <article class="step">
+              <h3>Publish & maintain</h3>
+              <p>
+                Publish after approval, confirm production output, record the
+                review date, and schedule the next content review or retirement
+                decision.
+              </p>
+            </article>
+          </div>
+        </section>
 
-    <section aria-labelledby="handoff">
-      <h2 id="handoff">Example issue handoff</h2>
-      <div class="details">
-        <details open>
-          <summary>Issue WEB-142 — heading component renders a visual H3 as a DIV</summary>
-          <div class="body">
-            <p><strong>Reported by:</strong> Content management &nbsp; <strong>Priority:</strong> Medium &nbsp; <strong>Owner:</strong> Front-end development</p>
-            <p><strong>User impact:</strong> The page looks correct visually, but assistive technology does not receive the same heading structure. This makes the page harder to navigate by headings.</p>
-            <p><strong>Expected result:</strong> The component should output a semantic heading element that matches the content hierarchy.</p>
-<pre><code>&lt;!-- Current output --&gt;
+        <section aria-labelledby="roles">
+          <h2 id="roles">Cross-team responsibilities</h2>
+          <div class="grid">
+            <article class="card">
+              <h3>Content owner</h3>
+              <p>
+                Confirms factual accuracy, business need, policy alignment, and
+                review cadence.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Content manager</h3>
+              <p>
+                Shapes content for the web, applies plain language, builds in
+                the CMS, coordinates reviews, documents issues, and validates
+                publication.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Design / development</h3>
+              <p>
+                Supports component behavior, technical defects, templates,
+                performance, and accessibility fixes that require code changes.
+              </p>
+            </article>
+          </div>
+          <div class="callout">
+            <strong>Delivery principle:</strong>
+            <p>
+              Do not treat content, accessibility, and development as separate
+              handoffs. Use shared acceptance criteria so issues are found
+              before launch rather than after publication.
+            </p>
+          </div>
+        </section>
+
+        <section aria-labelledby="inventory-title">
+          <h2 id="inventory-title">Sample content inventory</h2>
+          <p>
+            A content inventory helps a team see what exists, who owns it,
+            whether it is current, and what action is needed.
+          </p>
+          <div class="filters">
+            <div class="field">
+              <label for="inventorySearch">Search inventory</label>
+              <input
+                id="inventorySearch"
+                type="text"
+                placeholder="Try “accessibility” or “services”"
+              />
+            </div>
+            <div class="field">
+              <label for="inventoryState">Action</label>
+              <select id="inventoryState">
+                <option value="">All actions</option>
+                <option value="Keep">Keep</option>
+                <option value="Revise">Revise</option>
+                <option value="Merge">Merge</option>
+                <option value="Retire">Retire</option>
+              </select>
+            </div>
+            <div aria-live="polite">
+              <strong><span id="inventoryCount">6</span> items shown</strong>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table id="inventory">
+              <caption>
+                Illustrative federal web content inventory
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Content item</th>
+                  <th scope="col">Audience / user need</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Last reviewed</th>
+                  <th scope="col">Quality note</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-state="Keep">
+                  <td>Digital services overview</td>
+                  <td>Public / understand OCIO digital service role</td>
+                  <td>Digital Services</td>
+                  <td>Aug. 2026</td>
+                  <td>Current; concise; accessible</td>
+                  <td><span class="tag status-pass">Keep</span></td>
+                </tr>
+                <tr data-state="Revise">
+                  <td>Accessibility resources</td>
+                  <td>Employees and vendors / find 508 guidance</td>
+                  <td>Accessibility Program</td>
+                  <td>Feb. 2025</td>
+                  <td>
+                    Several long paragraphs; needs stronger task-based headings
+                  </td>
+                  <td><span class="tag status-open">Revise</span></td>
+                </tr>
+                <tr data-state="Merge">
+                  <td>Technology standards FAQ</td>
+                  <td>Partners / understand common standards</td>
+                  <td>Enterprise Architecture</td>
+                  <td>Nov. 2024</td>
+                  <td>Duplicates two policy explainer pages</td>
+                  <td><span class="tag">Merge</span></td>
+                </tr>
+                <tr data-state="Retire">
+                  <td>Legacy modernization announcement</td>
+                  <td>Public / historical announcement</td>
+                  <td>Communications</td>
+                  <td>May 2022</td>
+                  <td>Outdated and no longer supports an active user task</td>
+                  <td><span class="tag status-high">Retire</span></td>
+                </tr>
+                <tr data-state="Revise">
+                  <td>Data services overview</td>
+                  <td>Public / understand data program</td>
+                  <td>Data Office</td>
+                  <td>Jan. 2025</td>
+                  <td>Acronym-heavy; unclear call to action</td>
+                  <td><span class="tag status-open">Revise</span></td>
+                </tr>
+                <tr data-state="Keep">
+                  <td>Contact the technology office</td>
+                  <td>Public / find the correct contact route</td>
+                  <td>OCIO Operations</td>
+                  <td>Jul. 2026</td>
+                  <td>Current; clear ownership and routing</td>
+                  <td><span class="tag status-pass">Keep</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section aria-labelledby="acceptance">
+          <h2 id="acceptance">Definition of done for a web update</h2>
+          <ul class="checklist">
+            <li>
+              <span aria-hidden="true">✓</span>
+              <div>
+                <strong>Requirement confirmed.</strong> The page has a known
+                audience, user need, owner, and approval path.
+              </div>
+            </li>
+            <li>
+              <span aria-hidden="true">✓</span>
+              <div>
+                <strong>Content is web-ready.</strong> The most important
+                information comes first; headings are descriptive; language is
+                concise and understandable.
+              </div>
+            </li>
+            <li>
+              <span aria-hidden="true">✓</span>
+              <div>
+                <strong>Accessibility reviewed.</strong> Heading structure,
+                links, images, forms, keyboard use, and content relationships
+                have been checked.
+              </div>
+            </li>
+            <li>
+              <span aria-hidden="true">✓</span>
+              <div>
+                <strong>CMS build validated.</strong> Components, metadata,
+                links, responsive behavior, and page relationships work in the
+                staging environment.
+              </div>
+            </li>
+            <li>
+              <span aria-hidden="true">✓</span>
+              <div>
+                <strong>Stakeholders approve.</strong> Content owner and
+                required technical or communications partners validate the final
+                version.
+              </div>
+            </li>
+            <li>
+              <span aria-hidden="true">✓</span>
+              <div>
+                <strong>Production verified.</strong> The published page is
+                checked after release and assigned a future review date.
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="handoff">
+          <h2 id="handoff">Example issue handoff</h2>
+          <div class="details">
+            <details open>
+              <summary>
+                Issue WEB-142 — heading component renders a visual H3 as a DIV
+              </summary>
+              <div class="body">
+                <p>
+                  <strong>Reported by:</strong> Content management &nbsp;
+                  <strong>Priority:</strong> Medium &nbsp;
+                  <strong>Owner:</strong> Front-end development
+                </p>
+                <p>
+                  <strong>User impact:</strong> The page looks correct visually,
+                  but assistive technology does not receive the same heading
+                  structure. This makes the page harder to navigate by headings.
+                </p>
+                <p>
+                  <strong>Expected result:</strong> The component should output
+                  a semantic heading element that matches the content hierarchy.
+                </p>
+                <pre><code>&lt;!-- Current output --&gt;
 &lt;div class="card-title"&gt;Accessibility resources&lt;/div&gt;
 
 &lt;!-- Recommended output --&gt;
 &lt;h3 class="card-title"&gt;Accessibility resources&lt;/h3&gt;</code></pre>
-            <p><strong>Validation plan:</strong> Re-test the component in staging, inspect the DOM, navigate the page by headings, and regression-test other pages that use the same component before production release.</p>
+                <p>
+                  <strong>Validation plan:</strong> Re-test the component in
+                  staging, inspect the DOM, navigate the page by headings, and
+                  regression-test other pages that use the same component before
+                  production release.
+                </p>
+              </div>
+            </details>
           </div>
-        </details>
+        </section>
       </div>
-    </section>
-  </div>
 
-  <section class="portfolio-proof">
-    <div class="wrap">
-      <h2>What this sample demonstrates</h2>
-      <div class="proof-grid">
-        <div class="proof-card"><h3>Digital content governance</h3><p>Ownership, lifecycle review, content inventories, revision decisions, and a repeatable definition of done.</p></div>
-        <div class="proof-card"><h3>CMS operations</h3><p>Intake, staging, reusable components, metadata, QA, approvals, publishing, and production verification.</p></div>
-        <div class="proof-card"><h3>Cross-team coordination</h3><p>Clear roles, issue documentation, developer handoff, validation criteria, and regression testing.</p></div>
+      <section class="portfolio-proof">
+        <div class="wrap">
+          <h2>What this sample demonstrates</h2>
+          <div class="proof-grid">
+            <div class="proof-card">
+              <h3>Digital content governance</h3>
+              <p>
+                Ownership, lifecycle review, content inventories, revision
+                decisions, and a repeatable definition of done.
+              </p>
+            </div>
+            <div class="proof-card">
+              <h3>CMS operations</h3>
+              <p>
+                Intake, staging, reusable components, metadata, QA, approvals,
+                publishing, and production verification.
+              </p>
+            </div>
+            <div class="proof-card">
+              <h3>Cross-team coordination</h3>
+              <p>
+                Clear roles, issue documentation, developer handoff, validation
+                criteria, and regression testing.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <strong
+          >Portfolio concept — Federal web content, accessibility, and
+          governance</strong
+        >
+        <p class="muted">
+          Built as a standalone HTML demonstration using semantic markup,
+          visible keyboard focus, responsive layouts, accessible form labels,
+          reduced-motion support, and plain-language content patterns.
+        </p>
       </div>
-    </div>
-  </section>
-</main>
+    </footer>
 
-<footer>
-  <div class="wrap">
-    <strong>Portfolio concept — Federal web content, accessibility, and governance</strong>
-    <p class="muted">Built as a standalone HTML demonstration using semantic markup, visible keyboard focus, responsive layouts, accessible form labels, reduced-motion support, and plain-language content patterns.</p>
-  </div>
-</footer>
-
-<script>
-const search=document.querySelector('#inventorySearch');
-const state=document.querySelector('#inventoryState');
-const invRows=[...document.querySelectorAll('#inventory tbody tr')];
-function updateInventory(){
-  const q=search.value.trim().toLowerCase();
-  const s=state.value;
-  let count=0;
-  invRows.forEach(r=>{
-    const matchText=r.textContent.toLowerCase().includes(q);
-    const matchState=!s||r.dataset.state===s;
-    r.hidden=!(matchText&&matchState);
-    if(!r.hidden) count++;
-  });
-  document.querySelector('#inventoryCount').textContent=count;
-}
-search.addEventListener('input',updateInventory);
-state.addEventListener('change',updateInventory);
-updateInventory();
-</script>
-</body>
+    <script>
+      const search = document.querySelector("#inventorySearch");
+      const state = document.querySelector("#inventoryState");
+      const invRows = [...document.querySelectorAll("#inventory tbody tr")];
+      function updateInventory() {
+        const q = search.value.trim().toLowerCase();
+        const s = state.value;
+        let count = 0;
+        invRows.forEach((r) => {
+          const matchText = r.textContent.toLowerCase().includes(q);
+          const matchState = !s || r.dataset.state === s;
+          r.hidden = !(matchText && matchState);
+          if (!r.hidden) count++;
+        });
+        document.querySelector("#inventoryCount").textContent = count;
+      }
+      search.addEventListener("input", updateInventory);
+      state.addEventListener("change", updateInventory);
+      updateInventory();
+    </script>
+  </body>
 </html>
