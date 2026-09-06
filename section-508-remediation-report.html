@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Sample Section 508 remediation report and web QA checklist for a federal content portfolio.">
+<title>Section 508 remediation report | DHS OCIO Portfolio Concept</title>
+<style>
+:root{
+  --ink:#1b1b1b;
+  --muted:#565c65;
+  --blue:#005ea8;
+  --blue-dark:#1a4480;
+  --blue-darker:#162e51;
+  --cyan:#00bde3;
+  --red:#b50909;
+  --green:#2e8540;
+  --gold:#ffbe2e;
+  --bg:#f7f9fa;
+  --line:#dfe1e2;
+  --white:#fff;
+  --focus:#face00;
+  --radius:10px;
+  --shadow:0 10px 28px rgba(22,46,81,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  color:var(--ink);
+  background:var(--white);
+  line-height:1.55;
+}
+a{color:var(--blue);text-decoration-thickness:.08em;text-underline-offset:.18em}
+a:hover{color:var(--blue-dark)}
+a:focus,button:focus,input:focus,select:focus,summary:focus{
+  outline:4px solid var(--focus);
+  outline-offset:3px;
+}
+.skip-link{
+  position:absolute;left:-999px;top:8px;background:#fff;color:#000;
+  padding:.75rem 1rem;z-index:9999;border:2px solid #000;
+}
+.skip-link:focus{left:8px}
+.gov-banner{
+  background:#eee;color:#1b1b1b;font-size:.86rem;border-bottom:1px solid var(--line);
+}
+.gov-banner .wrap{padding:.48rem 1rem;display:flex;gap:.6rem;align-items:center}
+.flag{
+  width:18px;height:12px;display:inline-grid;grid-template-rows:repeat(7,1fr);
+  border:1px solid #bbb;flex:0 0 auto;background:
+  linear-gradient(#b22234 0 14%,#fff 14% 28%,#b22234 28% 42%,#fff 42% 56%,#b22234 56% 70%,#fff 70% 84%,#b22234 84% 100%);
+}
+.portfolio-note{
+  background:#fff4e6;border-left:5px solid #ff9d1a;padding:.8rem 1rem;font-size:.9rem;
+}
+.site-header{background:var(--blue-darker);color:#fff}
+.brand-row{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:1.05rem 1rem}
+.brand{display:flex;align-items:center;gap:.9rem}
+.mark{
+  width:52px;height:52px;border-radius:50%;border:3px solid #fff;display:grid;place-items:center;
+  font-weight:800;font-size:.72rem;line-height:1;text-align:center;letter-spacing:.04em;
+}
+.brand strong{display:block;font-size:1.1rem}
+.brand span{display:block;font-size:.88rem;color:#d9e8f6}
+.nav{background:#fff;border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:.2rem;align-items:center;overflow-x:auto}
+.nav a{
+  display:block;padding:.86rem .9rem;color:var(--blue-darker);font-weight:700;text-decoration:none;white-space:nowrap
+}
+.nav a[aria-current="page"]{border-bottom:4px solid var(--blue);color:var(--blue)}
+.wrap{max-width:1180px;margin:auto}
+.hero{background:linear-gradient(135deg,#f0f7fc 0%,#fff 70%);border-bottom:1px solid var(--line)}
+.hero .wrap{padding:3.4rem 1rem 3rem}
+.eyebrow{text-transform:uppercase;letter-spacing:.08em;font-weight:800;font-size:.8rem;color:var(--blue)}
+h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.05;margin:.35rem 0 1rem;color:var(--blue-darker);max-width:900px}
+.lede{font-size:1.22rem;max-width:780px;color:#30363d;margin:0}
+main .wrap{padding:2.6rem 1rem}
+h2{font-size:1.8rem;line-height:1.2;color:var(--blue-darker);margin:2.2rem 0 .8rem}
+h3{font-size:1.18rem;color:var(--blue-darker);margin:1.4rem 0 .45rem}
+p{max-width:800px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1.15rem}
+.card{
+  grid-column:span 4;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:1.25rem
+}
+.card h3{margin-top:0}
+.card p:last-child{margin-bottom:0}
+.callout{
+  background:#eef7ff;border-left:5px solid var(--blue);padding:1.1rem 1.2rem;margin:1.5rem 0;
+  max-width:900px
+}
+.button{
+  display:inline-block;border:0;border-radius:4px;background:var(--blue);color:#fff!important;
+  padding:.72rem 1rem;font-weight:800;text-decoration:none;cursor:pointer;font-size:1rem
+}
+.button:hover{background:var(--blue-dark)}
+.button.secondary{background:#fff;color:var(--blue)!important;border:2px solid var(--blue)}
+.button.small{font-size:.9rem;padding:.52rem .72rem}
+.tag{
+  display:inline-block;border-radius:999px;background:#e7f3ff;color:#17446f;font-size:.78rem;
+  font-weight:800;padding:.24rem .55rem;margin:.1rem .18rem .1rem 0
+}
+.status-pass{background:#e8f5e9;color:#1f5c2e}
+.status-open{background:#fff3cd;color:#684f00}
+.status-fixed{background:#e7f3ff;color:#17446f}
+.status-high{background:#fde8e8;color:#7a0000}
+.status-med{background:#fff3cd;color:#684f00}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;margin:1rem 0}
+table{border-collapse:collapse;width:100%;min-width:760px}
+caption{text-align:left;font-weight:800;font-size:1.05rem;padding:.9rem;background:#f5f7f9}
+th,td{padding:.75rem .8rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:#e9eef3;color:#162e51}
+tbody tr:last-child td{border-bottom:0}
+.filters{display:flex;gap:.75rem;align-items:end;flex-wrap:wrap;background:#f5f7f9;padding:1rem;border-radius:8px}
+.field{display:flex;flex-direction:column;gap:.3rem}
+label{font-weight:800}
+select,input[type="text"]{font:inherit;border:1px solid #71767a;border-radius:4px;padding:.6rem;background:#fff}
+.checklist{
+  list-style:none;padding:0;max-width:900px;border:1px solid var(--line);border-radius:8px;overflow:hidden
+}
+.checklist li{display:flex;gap:.7rem;align-items:flex-start;padding:.8rem;border-bottom:1px solid var(--line)}
+.checklist li:last-child{border-bottom:0}
+.checklist input{margin-top:.3rem;transform:scale(1.2)}
+.progress{width:100%;height:12px;background:#dfe1e2;border-radius:999px;overflow:hidden;max-width:600px}
+.progress>span{display:block;height:100%;background:var(--green);width:0;transition:width .2s}
+.details details{border:1px solid var(--line);border-radius:8px;margin:.7rem 0;background:#fff}
+.details summary{cursor:pointer;font-weight:800;padding:.9rem}
+.details .body{padding:0 .9rem .9rem}
+code{background:#f0f0f0;padding:.12rem .28rem;border-radius:3px}
+pre{background:#1b1b1b;color:#f8f8f2;padding:1rem;border-radius:8px;overflow:auto;font-size:.9rem}
+.workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem;counter-reset:step}
+.workflow .step{border-top:5px solid var(--blue);background:#f5f9fc;padding:1rem;min-height:170px}
+.workflow .step::before{counter-increment:step;content:counter(step);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--blue-darker);color:#fff;font-weight:800;margin-bottom:.7rem}
+.meta{display:flex;flex-wrap:wrap;gap:.75rem;font-size:.9rem;color:var(--muted);margin-top:1rem}
+footer{margin-top:3rem;background:#f1f3f5;border-top:1px solid var(--line)}
+footer .wrap{padding:2rem 1rem}
+.portfolio-proof{background:#162e51;color:#fff;padding:2rem 0;margin-top:3rem}
+.portfolio-proof h2,.portfolio-proof h3{color:#fff}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.proof-card{border:1px solid rgba(255,255,255,.3);padding:1rem;border-radius:8px;background:rgba(255,255,255,.04)}
+.muted{color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:800px){
+  .card{grid-column:span 12}
+  .workflow{grid-template-columns:1fr}
+  .proof-grid{grid-template-columns:1fr}
+  .brand-row{align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="gov-banner">
+  <div class="wrap"><span class="flag" aria-hidden="true"></span><span>An official-style U.S. government portfolio concept</span></div>
+</div>
+<div class="portfolio-note">
+  <div class="wrap"><strong>Portfolio sample:</strong> This is an independent demonstration created for a job application. It is not an official Department of Homeland Security website or publication.</div>
+</div>
+<header class="site-header">
+  <div class="wrap brand-row">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">DHS<br>STYLE</div>
+      <div><strong>Department of Homeland Security</strong><span>Office of the Chief Information Officer — portfolio concept</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Primary">
+  <div class="wrap">
+    <a href="ocio-digital-services.html">Digital services</a>
+    <a href="section-508-remediation-report.html" aria-current="page">508 report</a>
+    <a href="content-governance-workflow.html">Content governance</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Sample accessibility artifact</div>
+    <h1>Section 508 accessibility review and remediation report</h1>
+    <p class="lede">A working example of how a content manager can document accessibility findings, identify ownership, describe the fix in plain language, and validate the result before publication.</p>
+    <div class="meta"><span>Sample page reviewed: Digital Services Overview</span><span>Review type: content + manual QA</span><span>Version: 1.0</span></div>
+  </div>
+</section>
+
+<main id="main-content">
+  <div class="wrap">
+    <section aria-labelledby="summary">
+      <h2 id="summary">Review summary</h2>
+      <div class="grid">
+        <article class="card"><div class="eyebrow">8 checks</div><h3>Content and structure</h3><p>Headings, link purpose, text alternatives, lists, labels, page title, reading order, and plain-language review.</p></article>
+        <article class="card"><div class="eyebrow">4 issues</div><h3>Issues documented</h3><p>Each issue includes severity, requirement, recommended remediation, owner, and validation status.</p></article>
+        <article class="card"><div class="eyebrow">2 methods</div><h3>Validation approach</h3><p>Combine automated scanning with manual keyboard, screen-reader-aware, content, and code review.</p></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="findings">
+      <h2 id="findings">Accessibility findings</h2>
+      <div class="filters" aria-label="Filter accessibility findings">
+        <div class="field">
+          <label for="statusFilter">Status</label>
+          <select id="statusFilter">
+            <option value="">All statuses</option>
+            <option value="Open">Open</option>
+            <option value="Fixed">Fixed</option>
+            <option value="Validated">Validated</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="severityFilter">Severity</label>
+          <select id="severityFilter">
+            <option value="">All severities</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+        <div aria-live="polite"><strong><span id="resultCount">4</span> findings shown</strong></div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="issues">
+          <caption>Sample remediation log</caption>
+          <thead><tr><th scope="col">ID</th><th scope="col">Finding</th><th scope="col">Accessibility requirement</th><th scope="col">Severity</th><th scope="col">Remediation</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr data-status="Validated" data-severity="High">
+              <td>A11Y-01</td>
+              <td>Form input had placeholder text but no programmatic label.</td>
+              <td>Form controls need an accessible name and clear instructions.</td>
+              <td><span class="tag status-high">High</span></td>
+              <td>Add a visible <code>&lt;label&gt;</code> tied to the input with matching <code>for</code> and <code>id</code> values.</td>
+              <td><span class="tag status-pass">Validated</span></td>
+            </tr>
+            <tr data-status="Fixed" data-severity="Medium">
+              <td>A11Y-02</td>
+              <td>Hero image description repeated nearby visible text.</td>
+              <td>Text alternatives should communicate purpose without unnecessary repetition.</td>
+              <td><span class="tag status-med">Medium</span></td>
+              <td>Use concise alt text when the image adds meaning; use empty alt text when it is decorative.</td>
+              <td><span class="tag status-fixed">Fixed</span></td>
+            </tr>
+            <tr data-status="Open" data-severity="High">
+              <td>A11Y-03</td>
+              <td>Keyboard focus was difficult to see on dark navigation.</td>
+              <td>Interactive controls need a visible focus indicator.</td>
+              <td><span class="tag status-high">High</span></td>
+              <td>Add a high-contrast focus outline and test every navigation item using only the keyboard.</td>
+              <td><span class="tag status-open">Open</span></td>
+            </tr>
+            <tr data-status="Validated" data-severity="Low">
+              <td>A11Y-04</td>
+              <td>Generic “Learn more” links did not explain their destination out of context.</td>
+              <td>Link purpose should be understandable from the link text or accessible context.</td>
+              <td><span class="tag">Low</span></td>
+              <td>Replace generic text with descriptive links such as “Read the digital accessibility guidance.”</td>
+              <td><span class="tag status-pass">Validated</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="code-fixes">
+      <h2 id="code-fixes">Remediation documentation</h2>
+      <div class="details">
+        <details>
+          <summary>Example: accessible form label</summary>
+          <div class="body">
+            <p><strong>Issue:</strong> A placeholder disappears after entry and may not provide a reliable accessible name.</p>
+<pre><code>&lt;label for="email"&gt;Email address&lt;/label&gt;
+&lt;input id="email" name="email" type="email"
+       autocomplete="email"&gt;</code></pre>
+            <p><strong>Validation:</strong> Confirm the label is visible, programmatically associated, keyboard reachable, and announced with the field.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Example: heading hierarchy</summary>
+          <div class="body">
+            <p><strong>Issue:</strong> Visual styling was used instead of structural headings.</p>
+<pre><code>&lt;h1&gt;Digital services&lt;/h1&gt;
+  &lt;h2&gt;What this office does&lt;/h2&gt;
+    &lt;h3&gt;Improve digital services&lt;/h3&gt;</code></pre>
+            <p><strong>Validation:</strong> Review the heading outline without CSS and confirm the hierarchy matches the page structure.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Example: keyboard focus styling</summary>
+          <div class="body">
+<pre><code>a:focus,
+button:focus,
+input:focus {
+  outline: 4px solid #face00;
+  outline-offset: 3px;
+}</code></pre>
+            <p><strong>Validation:</strong> Tab through the page from top to bottom and confirm focus is never hidden or lost.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section aria-labelledby="qa">
+      <h2 id="qa">Pre-publication QA checklist</h2>
+      <p id="qaText" aria-live="polite">0 checks complete</p>
+      <div class="progress" role="progressbar" aria-label="QA checklist progress" aria-valuemin="0" aria-valuemax="100"><span id="qaBar"></span></div>
+      <ul class="checklist">
+        <li><input class="qa-check" id="q1" type="checkbox"><label for="q1">Page has one descriptive H1 and a logical heading order.</label></li>
+        <li><input class="qa-check" id="q2" type="checkbox"><label for="q2">Link text makes sense without relying on surrounding text.</label></li>
+        <li><input class="qa-check" id="q3" type="checkbox"><label for="q3">Meaningful images have useful text alternatives; decorative images are ignored by assistive technology.</label></li>
+        <li><input class="qa-check" id="q4" type="checkbox"><label for="q4">Form controls have visible labels, instructions, and understandable errors.</label></li>
+        <li><input class="qa-check" id="q5" type="checkbox"><label for="q5">Page can be completed using a keyboard and focus remains visible.</label></li>
+        <li><input class="qa-check" id="q6" type="checkbox"><label for="q6">Information is not communicated by color alone.</label></li>
+        <li><input class="qa-check" id="q7" type="checkbox"><label for="q7">Content is concise, uses active voice, and avoids unexplained jargon or acronyms.</label></li>
+        <li><input class="qa-check" id="q8" type="checkbox"><label for="q8">Responsive layout and content have been validated at common viewport sizes.</label></li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="portfolio-proof">
+    <div class="wrap">
+      <h2>What this sample demonstrates</h2>
+      <div class="proof-grid">
+        <div class="proof-card"><h3>Accessibility reporting</h3><p>Issue IDs, severity, requirement, remediation guidance, status, and validation language.</p></div>
+        <div class="proof-card"><h3>HTML/CSS troubleshooting</h3><p>Concrete markup examples that connect content QA to code-level fixes.</p></div>
+        <div class="proof-card"><h3>Repeatable QA</h3><p>An interactive checklist supports consistent pre-publication review and regression validation.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <strong>Portfolio concept — Federal web content, accessibility, and governance</strong>
+    <p class="muted">Built as a standalone HTML demonstration using semantic markup, visible keyboard focus, responsive layouts, accessible form labels, reduced-motion support, and plain-language content patterns.</p>
+  </div>
+</footer>
+
+<script>
+const rows=[...document.querySelectorAll('#issues tbody tr')];
+const status=document.querySelector('#statusFilter');
+const severity=document.querySelector('#severityFilter');
+function filterRows(){
+  rows.forEach(row=>{
+    const s=row.dataset.status, v=row.dataset.severity;
+    const show=(!status.value||s===status.value)&&(!severity.value||v===severity.value);
+    row.hidden=!show;
+  });
+  document.querySelector('#resultCount').textContent=rows.filter(r=>!r.hidden).length;
+}
+status.addEventListener('change',filterRows);
+severity.addEventListener('change',filterRows);
+filterRows();
+
+const checks=[...document.querySelectorAll('.qa-check')];
+const bar=document.querySelector('#qaBar');
+const text=document.querySelector('#qaText');
+function updateQA(){
+  const done=checks.filter(c=>c.checked).length;
+  const pct=Math.round(done/checks.length*100);
+  bar.style.width=pct+'%';
+  text.textContent=`${done} of ${checks.length} checks complete (${pct}%)`;
+}
+checks.forEach(c=>c.addEventListener('change',updateQA));
+updateQA();
+</script>
+</body>
+</html>

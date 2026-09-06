@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Federal Digital Content Portfolio | William Ferrufino</title>
+<meta name="description" content="Three federal-style portfolio examples covering plain language, Section 508, accessibility remediation, QA, content governance, and web publishing.">
+<style>
+:root{
+  --ink:#1b1b1b;
+  --muted:#565c65;
+  --blue:#005ea8;
+  --blue-dark:#1a4480;
+  --blue-darker:#162e51;
+  --cyan:#00bde3;
+  --red:#b50909;
+  --green:#2e8540;
+  --gold:#ffbe2e;
+  --bg:#f7f9fa;
+  --line:#dfe1e2;
+  --white:#fff;
+  --focus:#face00;
+  --radius:10px;
+  --shadow:0 10px 28px rgba(22,46,81,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  color:var(--ink);
+  background:var(--white);
+  line-height:1.55;
+}
+a{color:var(--blue);text-decoration-thickness:.08em;text-underline-offset:.18em}
+a:hover{color:var(--blue-dark)}
+a:focus,button:focus,input:focus,select:focus,summary:focus{
+  outline:4px solid var(--focus);
+  outline-offset:3px;
+}
+.skip-link{
+  position:absolute;left:-999px;top:8px;background:#fff;color:#000;
+  padding:.75rem 1rem;z-index:9999;border:2px solid #000;
+}
+.skip-link:focus{left:8px}
+.gov-banner{
+  background:#eee;color:#1b1b1b;font-size:.86rem;border-bottom:1px solid var(--line);
+}
+.gov-banner .wrap{padding:.48rem 1rem;display:flex;gap:.6rem;align-items:center}
+.flag{
+  width:18px;height:12px;display:inline-grid;grid-template-rows:repeat(7,1fr);
+  border:1px solid #bbb;flex:0 0 auto;background:
+  linear-gradient(#b22234 0 14%,#fff 14% 28%,#b22234 28% 42%,#fff 42% 56%,#b22234 56% 70%,#fff 70% 84%,#b22234 84% 100%);
+}
+.portfolio-note{
+  background:#fff4e6;border-left:5px solid #ff9d1a;padding:.8rem 1rem;font-size:.9rem;
+}
+.site-header{background:var(--blue-darker);color:#fff}
+.brand-row{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:1.05rem 1rem}
+.brand{display:flex;align-items:center;gap:.9rem}
+.mark{
+  width:52px;height:52px;border-radius:50%;border:3px solid #fff;display:grid;place-items:center;
+  font-weight:800;font-size:.72rem;line-height:1;text-align:center;letter-spacing:.04em;
+}
+.brand strong{display:block;font-size:1.1rem}
+.brand span{display:block;font-size:.88rem;color:#d9e8f6}
+.nav{background:#fff;border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:.2rem;align-items:center;overflow-x:auto}
+.nav a{
+  display:block;padding:.86rem .9rem;color:var(--blue-darker);font-weight:700;text-decoration:none;white-space:nowrap
+}
+.nav a[aria-current="page"]{border-bottom:4px solid var(--blue);color:var(--blue)}
+.wrap{max-width:1180px;margin:auto}
+.hero{background:linear-gradient(135deg,#f0f7fc 0%,#fff 70%);border-bottom:1px solid var(--line)}
+.hero .wrap{padding:3.4rem 1rem 3rem}
+.eyebrow{text-transform:uppercase;letter-spacing:.08em;font-weight:800;font-size:.8rem;color:var(--blue)}
+h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.05;margin:.35rem 0 1rem;color:var(--blue-darker);max-width:900px}
+.lede{font-size:1.22rem;max-width:780px;color:#30363d;margin:0}
+main .wrap{padding:2.6rem 1rem}
+h2{font-size:1.8rem;line-height:1.2;color:var(--blue-darker);margin:2.2rem 0 .8rem}
+h3{font-size:1.18rem;color:var(--blue-darker);margin:1.4rem 0 .45rem}
+p{max-width:800px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1.15rem}
+.card{
+  grid-column:span 4;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:1.25rem
+}
+.card h3{margin-top:0}
+.card p:last-child{margin-bottom:0}
+.callout{
+  background:#eef7ff;border-left:5px solid var(--blue);padding:1.1rem 1.2rem;margin:1.5rem 0;
+  max-width:900px
+}
+.button{
+  display:inline-block;border:0;border-radius:4px;background:var(--blue);color:#fff!important;
+  padding:.72rem 1rem;font-weight:800;text-decoration:none;cursor:pointer;font-size:1rem
+}
+.button:hover{background:var(--blue-dark)}
+.button.secondary{background:#fff;color:var(--blue)!important;border:2px solid var(--blue)}
+.button.small{font-size:.9rem;padding:.52rem .72rem}
+.tag{
+  display:inline-block;border-radius:999px;background:#e7f3ff;color:#17446f;font-size:.78rem;
+  font-weight:800;padding:.24rem .55rem;margin:.1rem .18rem .1rem 0
+}
+.status-pass{background:#e8f5e9;color:#1f5c2e}
+.status-open{background:#fff3cd;color:#684f00}
+.status-fixed{background:#e7f3ff;color:#17446f}
+.status-high{background:#fde8e8;color:#7a0000}
+.status-med{background:#fff3cd;color:#684f00}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;margin:1rem 0}
+table{border-collapse:collapse;width:100%;min-width:760px}
+caption{text-align:left;font-weight:800;font-size:1.05rem;padding:.9rem;background:#f5f7f9}
+th,td{padding:.75rem .8rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:#e9eef3;color:#162e51}
+tbody tr:last-child td{border-bottom:0}
+.filters{display:flex;gap:.75rem;align-items:end;flex-wrap:wrap;background:#f5f7f9;padding:1rem;border-radius:8px}
+.field{display:flex;flex-direction:column;gap:.3rem}
+label{font-weight:800}
+select,input[type="text"]{font:inherit;border:1px solid #71767a;border-radius:4px;padding:.6rem;background:#fff}
+.checklist{
+  list-style:none;padding:0;max-width:900px;border:1px solid var(--line);border-radius:8px;overflow:hidden
+}
+.checklist li{display:flex;gap:.7rem;align-items:flex-start;padding:.8rem;border-bottom:1px solid var(--line)}
+.checklist li:last-child{border-bottom:0}
+.checklist input{margin-top:.3rem;transform:scale(1.2)}
+.progress{width:100%;height:12px;background:#dfe1e2;border-radius:999px;overflow:hidden;max-width:600px}
+.progress>span{display:block;height:100%;background:var(--green);width:0;transition:width .2s}
+.details details{border:1px solid var(--line);border-radius:8px;margin:.7rem 0;background:#fff}
+.details summary{cursor:pointer;font-weight:800;padding:.9rem}
+.details .body{padding:0 .9rem .9rem}
+code{background:#f0f0f0;padding:.12rem .28rem;border-radius:3px}
+pre{background:#1b1b1b;color:#f8f8f2;padding:1rem;border-radius:8px;overflow:auto;font-size:.9rem}
+.workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem;counter-reset:step}
+.workflow .step{border-top:5px solid var(--blue);background:#f5f9fc;padding:1rem;min-height:170px}
+.workflow .step::before{counter-increment:step;content:counter(step);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--blue-darker);color:#fff;font-weight:800;margin-bottom:.7rem}
+.meta{display:flex;flex-wrap:wrap;gap:.75rem;font-size:.9rem;color:var(--muted);margin-top:1rem}
+footer{margin-top:3rem;background:#f1f3f5;border-top:1px solid var(--line)}
+footer .wrap{padding:2rem 1rem}
+.portfolio-proof{background:#162e51;color:#fff;padding:2rem 0;margin-top:3rem}
+.portfolio-proof h2,.portfolio-proof h3{color:#fff}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.proof-card{border:1px solid rgba(255,255,255,.3);padding:1rem;border-radius:8px;background:rgba(255,255,255,.04)}
+.muted{color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:800px){
+  .card{grid-column:span 12}
+  .workflow{grid-template-columns:1fr}
+  .proof-grid{grid-template-columns:1fr}
+  .brand-row{align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="gov-banner"><div class="wrap"><span class="flag" aria-hidden="true"></span><span>Federal digital content portfolio</span></div></div>
+<div class="portfolio-note"><div class="wrap"><strong>Independent portfolio:</strong> These samples are not official DHS pages and do not represent DHS policy. They demonstrate federal web content and accessibility skills for a job application.</div></div>
+<header class="site-header">
+<div class="wrap brand-row">
+<div class="brand"><div class="mark" aria-hidden="true">WF</div><div><strong>William Ferrufino</strong><span>Federal web content • accessibility • governance</span></div></div>
+</div>
+</header>
+<main id="main-content">
+<section class="hero"><div class="wrap">
+<div class="eyebrow">Mini portfolio</div>
+<h1>Federal content that is clear, accessible, and ready to publish</h1>
+<p class="lede">Three standalone examples built around the kind of work described in a federal web content manager role: plain language, WCAG/Section 508, remediation documentation, content inventories, QA, HTML/CSS/JavaScript troubleshooting, CMS workflows, and cross-team delivery.</p>
+</div></section>
+<div class="wrap">
+<section>
+<h2>Explore the samples</h2>
+<div class="grid">
+<article class="card"><div class="eyebrow">01 • Public content</div><h3>Digital services overview</h3><p>A DHS OCIO-style public information page rewritten around plain language, scannability, accessibility, and content ownership.</p><p><a class="button" href="ocio-digital-services.html">View sample page</a></p></article>
+<article class="card"><div class="eyebrow">02 • Accessibility</div><h3>Section 508 remediation report</h3><p>An accessibility findings log with remediation notes, HTML/CSS examples, validation language, filters, and a working QA checklist.</p><p><a class="button" href="section-508-remediation-report.html">View 508 report</a></p></article>
+<article class="card"><div class="eyebrow">03 • Governance</div><h3>Content governance workflow</h3><p>A publishing workflow, searchable content inventory, cross-team roles, definition of done, and a developer issue handoff example.</p><p><a class="button" href="content-governance-workflow.html">View governance sample</a></p></article>
+<article class="card"><div class="eyebrow">04 • Formal report</div><h3>Web accessibility assessment &amp; remediation report</h3><p>A federal-style PDF deliverable documenting Section 508 findings, remediation actions, QA validation, content inventory, issue handoff, and final disposition.</p><p><a class="button" href="DHS-Style-Web-Accessibility-Assessment-Report.pdf" target="_blank" rel="noopener">View PDF report <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></p></article>
+</div>
+</section>
+<section>
+<h2>Skills mapped to the job description</h2>
+<div class="table-wrap"><table>
+<caption>Portfolio coverage</caption>
+<thead><tr><th scope="col">Job requirement</th><th scope="col">Where it is demonstrated</th></tr></thead>
+<tbody>
+<tr><td>Federal Plain Language Guidelines and usability principles</td><td>Sample 1: audience-first structure, short sections, active voice, plain words, descriptive headings.</td></tr>
+<tr><td>WCAG / Section 508</td><td>Samples 1 and 2: semantic structure, keyboard focus, form labels, meaningful links, remediation documentation, QA checklist.</td></tr>
+<tr><td>Accessibility reports and remediation documentation</td><td>Sample 2: findings table, severity, status, remediation, code fixes, validation approach.</td></tr>
+<tr><td>Content inventories and quality assurance checklists</td><td>Samples 2 and 3: interactive QA checklist and searchable content inventory.</td></tr>
+<tr><td>HTML, CSS, JavaScript and CMS troubleshooting</td><td>Samples 2 and 3: accessible code fixes, component defect handoff, responsive standalone implementation.</td></tr>
+<tr><td>Cross-team project delivery</td><td>Sample 3: roles, intake-to-publish workflow, approval path, developer handoff, regression validation.</td></tr>
+</tbody></table></div>
+</section>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <strong>Portfolio concept — Federal web content, accessibility, and governance</strong>
+    <p class="muted">Built as a standalone HTML demonstration using semantic markup, visible keyboard focus, responsive layouts, accessible form labels, reduced-motion support, and plain-language content patterns.</p>
+  </div>
+</footer>
+
+</body>
+</html>
